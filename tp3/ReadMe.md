@@ -1,6 +1,6 @@
 # TP3
 
-Vous trouverez dans ce [lien]() la présentation utilisée dans ce TP.
+Vous trouverez dans ce [lien](https://docs.google.com/presentation/d/1WO4ZPoTGBLJoM6L_9MnQtKQD4ziRDP0reLbJGzPV6aQ/edit?usp=sharing) la présentation utilisée dans ce TP.
 
 ## Introduction
 
@@ -18,15 +18,15 @@ Dans cette partie, nous allons détailler l'architecture de la base de données 
 - Il s'agit d'accéder à une base de données Oracle
 - Il démarre toujours une et une seule **instance** de la base de données
 
-#### - Démo:
-- **Connectez-vous en tant que Administrateur DB**  
+#### - Demo:
+- **Se connecter en tant que Administrateur DB**  
 
 ``` sh
 connect sys/sys_password as sysdba 
 ```
 
 
-- **Arréter l'instance oracle d'une façon normale:**  
+- **Arrêter l'instance oracle d'une façon normale:**  
 
 ```sh
 shutdown normal 
@@ -44,30 +44,26 @@ startup nomount;
 alter database mount;
 ```
 
-
-- **Fermer la base et redémarrer la en mode restrict**  
+- **Ouvrir la base de données:**  
 
 ```sh
-alter database dismount;
-startup restrict;
-
+alter database open;
 ```
 
-- **Démonter la base et remonter la en mode lecture seule:**  
+- **Fermer la base et la réouvrir en mode lecture seule:**  
 
 ```sh
 alter database close;
 alter database open read only;
 ```
- 
-- **Arréter l'instance oracle en abondonnant les transactions en cours, et par la suite démarrer la base en réinitialisant les fichiers journaux:**  
+
+- **Démonter la base**  
 
 ```sh
-shutdown abandon;
-startup open resetlogs;
+alter database dismount;
 ```
  
-- **Arréter l'instance oracle en abondonnant les transactions en cours, et par la suite démarrer la base en réinitialisant les fichiers journaux:**  
+- **Arrêter l'instance oracle en abondonnant les transactions en cours, et par la suite démarrer la base en réinitialisant les fichiers journaux:**  
 
 ```sh
 shutdown abandon;
@@ -80,6 +76,12 @@ startup open resetlogs;
 shutdown transactional;
 startup force;
 ```
+- **Démarrer la base de données en mode "Maintenance"  :** 
+
+ ```sh
+startup restrict;
+```
+
 - **Afficher les colonnes de la vue de données de l'instance Oracle:**  
 
 ```sh
@@ -238,13 +240,13 @@ La base de données est une collection de données qui contient des **Data files
 
 - Commande : ``` select * from V$log; or Select * from V$logfile ; ```
 
-## 4/ Les espaces de tables et les schèmas:
+## 4/ Les espaces de tables et les schémas:
 
 - **Créer un espace de tables permanent avec ayant le nom 'tbs_perm_001' avec un fichier de données nommé tbs_perm_001.dat, dont la taille est de '20 MB' et metter le en ligne :**  
 
 ```sql
-CREATE TABLESPACE tbs_perm_001
-  DATAFILE 'tbs_perm_001.dat' 
+CREATE TABLESPACE tbs_perm_01
+  DATAFILE 'tbs_perm_01.dat' 
     SIZE 20M
   ONLINE;
 ```
@@ -298,24 +300,24 @@ CREATE USER tsuser1
 GRANT ALL PRIVILEGES TO tsuser1 with admin option ;
 flush privileges;
 ```
-- **Ouvrer une session oracle avec l'utilisateur "tsuser1":**  
+- **Ouvrir une session oracle avec l'utilisateur "tsuser1":**  
 
 ```sql
 connect tsuser1/tsuser1 
 ```
-- **Afficher le schéma courrant de la session, changer le schema de la session vers le schema par défaut du user "tsuser1" :**  
+- **Afficher le schéma courrant de la session, changer le schéma de la session vers le schéma par défaut du user "tsuser1" :**  
 
 ```sql
 select sys_context( 'userenv', 'current_schema' ) from dual;
 Alter session set current_schema=tsuser1;
 ```
-- **Vérifier que le schéma  courrant de la session est bien le schema par défaut du user "tsuser1, créer par la suite une nouvelle table avec une seule colonne number en tant que clè primaire":**  
+- **Vérifier que le schéma  courrant de la session est bien le schéma par défaut du user "tsuser1, créer par la suite une nouvelle table avec une seule colonne number en tant que clè primaire":**  
 
 ```sql
 select sys_context( 'userenv', 'current_schema' ) from dual;
 create table test1( pkey number primary key enable )
 ```
-- **Afficher toutes les lignes de la table crée et insérer par la suite une nouvelle ligne dans cette table:**  
+- **Afficher toutes les lignes de la table créée et insérer par la suite une nouvelle ligne dans cette table:**  
 
 ```sql
 select * from test1 ;
