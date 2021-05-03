@@ -199,7 +199,6 @@ SELECT ANY TABLE,
 ALTER ANY TABLE ,
 DROP ANY TABLE
 TO dev1;
----
 ```
 
 ¤   **Une fois qu'un utilisateur est créé, le DBA peut octroyer des privilèges de système spécifiques à cet utilisateur.**
@@ -219,7 +218,6 @@ ALTER ANY TABLE ,
 DROP ANY TABLE
 FROM 
 dev1;
----
 ```
 
  
@@ -245,7 +243,7 @@ dev1;
 create role Dev;
 create role Test;
 create role DevSecOps;
----
+```
 ```
 GRANT 
 CREATE PROCEDURE,
@@ -258,15 +256,11 @@ ALTER ANY TABLE,
 DROP ANY TABLE
 TO Dev;
 ```
-GRANT CONNECT,SELECT ANY TABLE,CREATE SESSION to Test;
----
+```
+grant connect,SELECT ANY TABLE,CREATE SESSION to Test;
 ```
 ```
 GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
----
-```
-```sql
----
 ```
 
 
