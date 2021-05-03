@@ -270,7 +270,6 @@ GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
 
 ```
 GRANT Dev to dev1,dev2
-
 ```
 ```
 GRANT Test to tester1,tester2;
@@ -303,7 +302,8 @@ REVOKE SELECT ANY TABLE from Test;
 
  
  
-```REVOKE
+```
+REVOKE
 ALL PRIVILEGES
 FROM devsecops;
 ```
