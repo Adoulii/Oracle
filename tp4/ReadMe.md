@@ -241,13 +241,28 @@ dev1;
      
      C) Le rôle de l'équipe DevSecOps permet d'avoir tous les privilèges avec mode administrateur de la base:  
 
-```sql
+```
+create role Dev;
+create role Test;
+create role DevSecOps;
 ---
 ```
-```sql
+GRANT 
+CREATE PROCEDURE,
+CREATE VIEW,
+CREATE SEQUENCE,
+CREATE SESSION,
+CREATE ANY TABLE,
+SELECT ANY TABLE,
+ALTER ANY TABLE,
+DROP ANY TABLE
+TO Dev;
+```
+GRANT CONNECT,SELECT ANY TABLE,CREATE SESSION to Test;
 ---
 ```
-```sql
+```
+GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
 ---
 ```
 ```sql
