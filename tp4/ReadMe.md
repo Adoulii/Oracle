@@ -169,7 +169,14 @@ ________________________________________________________________________________
       * [ username: devsecops2, password: devsecops2 ]
 
 
-```sql
+```
+CREATE USER dev1 IDENTIFIED by dev1;
+CREATE USER dev2 IDENTIFIED by dev2;
+CREATE USER tester1 IDENTIFIED by tester1;
+CREATE USER tester2 IDENTIFIED by tester2;
+CREATE USER devsecops1 IDENTIFIED by devsecops1;
+CREATE USER devsecops2 IDENTIFIED by devsecops2;
+
 ---
 ```
   --->  **Une fois qu'un utilisateur est créé, le DBA peut octroyer des privilèges de système spécifiques à cet utilisateur.**
