@@ -175,9 +175,7 @@ CREATE USER dev2 IDENTIFIED by dev2;
 CREATE USER tester1 IDENTIFIED by tester1;
 CREATE USER tester2 IDENTIFIED by tester2;
 CREATE USER devsecops1 IDENTIFIED by devsecops1;
-CREATE USER devsecops2 IDENTIFIED by devsecops2;
-
----
+CREATE USER devsecops2 IDENTIFIED by devsecops2
 ```
   --->  **Une fois qu'un utilisateur est créé, le DBA peut octroyer des privilèges de système spécifiques à cet utilisateur.**
  
@@ -190,7 +188,17 @@ CREATE USER devsecops2 IDENTIFIED by devsecops2;
      * Création de session.
      * Création,lecture, modification de structure et suppression de tables.
 
-```sql
+```
+GRANT
+CREATE PROCEDURE,
+CREATE VIEW,
+CREATE SEQUENCE,
+CREATE SESSION,
+CREATE ANY TABLE ,
+SELECT ANY TABLE,
+ALTER ANY TABLE ,
+DROP ANY TABLE
+TO dev1;
 ---
 ```
 
@@ -199,7 +207,18 @@ CREATE USER devsecops2 IDENTIFIED by devsecops2;
  
    - **Révoquer tous les privilèges associès à l'utilisateur dev1 :** 
 
-```sql
+```
+REVOKE 
+CREATE PROCEDURE,
+CREATE VIEW,
+CREATE SEQUENCE,
+CREATE SESSION,
+CREATE ANY TABLE ,
+SELECT ANY TABLE,
+ALTER ANY TABLE ,
+DROP ANY TABLE
+FROM 
+dev1;
 ---
 ```
 
