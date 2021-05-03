@@ -257,7 +257,7 @@ DROP ANY TABLE
 TO Dev;
 ```
 ```
-grant connect,SELECT ANY TABLE,CREATE SESSION to Test;
+GRANT CONNECT,SELECT ANY TABLE,CREATE SESSION to Test;
 ```
 ```
 GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
@@ -268,25 +268,26 @@ GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
    - **Attribuer à chaque utilisateur, le rôle qui lui correspond:** 
   
 
-```sql
----
 ```
-```sql
----
+GRANT Dev to dev1,dev2
+
 ```
-```sql
----
+```
+GRANT Test to tester1,tester2;
+```
+```
+GRANT DevSecOps to devsecops1,devsecops2;
 ```
 
    - **Limiter l'accès pour les testeurs de sorte qu'ils n'accèdent qu'à la table des employés "EMP":** 
   
 
-```sql
----
+```
+REVOKE SELECT ANY TABLE from Test;
 ```
 
- ```sql
----
+ ```
+ GRANT select on emp to Test;
 ```
  
  
@@ -294,16 +295,17 @@ GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
    - **Autoriser tous les utilisateurs sur le système pour interroger les données de la table EMP :** 
   
 
- ```sql
----
+ ```
+ GRANT select on emp to public;
 ```
 
 **Retirer les privilèges attribuées aux admins, ainsi que les utilisateurs qui ont reçu leurs privilèges sur la table EMP par un membre de l'équipe devsecops:**
 
  
  
-```sql
----
+```REVOKE
+ALL PRIVILEGES
+FROM devsecops;
 ```
 
 
@@ -320,8 +322,18 @@ GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
 
 
 
-```sql 
----
+```
+CREATE PROFILE devProfile 
+LIMIT
+SESSIONS_PER_USER UNLIMITED
+CPU_PER_SESSION 10000
+CPU_PER_CALL 1000
+CONNECT_TIME 45
+LOGICAL_READS_PER_SESSION DEFAULT
+LOGICAL_READS_PER_CALL 1000
+PRIVATE_SGA 25K
+PASSWORD_LIFE_TIME 60
+PASSWORD_REUSE_TIME 10;
 ```
 
 
@@ -337,8 +349,18 @@ GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
   * ***Taille maximale de l'SGA privée:*** ***25K***
   * ***Durée de vie en jours du mot de passe:*** ***60***
   * ***Nombre maximal de réutilisations de mot de passe:*** ***10***
-```sql 
----
+```
+CREATE PROFILE testProfile
+LIMIT
+SESSIONS_PER_USER 5
+CPU_PER_SESSION UNLIMITED
+CPU_PER_CALL 3000
+CONNECT_TIME 45
+LOGICAL_READS_PER_SESSION DEFAULT
+LOGICAL_READS_PER_CALL 1000
+PRIVATE_SGA 25K
+PASSWORD_LIFE_TIME 60
+PASSWORD_REUSE_TIME 10;
 ```
 
 **Créer un profile de ressources dédié à l'équipe devsecops avec les limitations suivantes:**
@@ -352,12 +374,22 @@ GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
   * ***Durée de vie en jours du mot de passe:*** ***60***
   * ***Nombre maximal de réutilisations de mot de passe:*** ***10***
 
-```sql 
----
+```
+CREATE PROFILE devsecopsProfile 
+LIMIT
+SESSIONS_PER_USER UNLIMITED
+CPU_PER_SESSION UNLIMITED
+CPU_PER_CALL 3000
+CONNECT_TIME 3600
+LOGICAL_READS_PER_SESSION DEFAULT
+LOGICAL_READS_PER_CALL 5000
+PRIVATE_SGA 80K
+PASSWORD_LIFE_TIME 60
+PASSWORD_REUSE_TIME 10;
 ```
 
   - **Attribuer à l'utilisateur "dev1", le profile qui lui correspond:** 
-```sql
----
+```
+ALTER USER dev1 PROFILE devProfile;
 ```
 
